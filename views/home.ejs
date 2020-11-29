@@ -1,0 +1,56 @@
+<!DOCTYPE html> 
+<html> 
+  
+<head> 
+    <title>Home Page</title> 
+      
+    <style type="text/css" media="screen"> 
+        body { 
+            
+            text-decoration-color: white; 
+             
+        } 
+    </style> 
+</head> 
+  
+<body> 
+    <div>
+        <table border="1">
+            <tr>
+                <th>
+                    user
+                </th>
+                <th>
+                    message
+                </th>
+                <th>
+                    date
+                </th>
+                <th>
+                    postId
+                </th>
+            </tr>
+            
+                <% comments.forEach((comment) => { %>
+                 <tr>
+                    <td>
+                      <%= comment.user %>
+                    </td>
+                    <td>
+                        <%= comment.message %>
+                    </td>
+                    <td>
+                        <%= comment.date %>
+                    </td>
+                    <td>
+                        <%= comment.postId %>
+                    </td>
+                </tr>
+                <% }) %>
+                
+        </table>
+        
+    </div>
+</body> 
+  
+</html>

@@ -16,11 +16,13 @@ module.exports = {
         let fetchedComments = lodash.filter(comments,(item)=>{
             //console.log(item)
             return item.postId === parseInt(req.params.postId)
-        })
+        });
+        res.render('home', { comments: fetchedComments });
         res.status(200).send(fetchedComments)
+        
     },
     getComments : function(req, res){
-        
+        res.render('home', { comments: comments });
         res.status(200).send(comments)
     },
     modifyComment : function (req, res) {

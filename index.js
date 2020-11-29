@@ -9,6 +9,7 @@ const app = express()
 const bodyParser = require ('body-parser');
 app.use(logger("dev"));
 app.use (bodyParser.json ())
+app.set('view engine', 'ejs'); 
 // Routes
 const postRoute = require("./routes/postRoute")
 const commentRoute = require("./routes/commentRoute");
