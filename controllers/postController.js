@@ -1,16 +1,25 @@
+const { result } = require('lodash');
+const mongoose = require('mongoose');
+const config = require("../config/config.json")
+mongoose.connect(config.datasource);
 
-let posts = [];
+let model = require("../model/post");
 
 module.exports = {
     addPost : function (req, res) {
-        let  newPost = req.body;
-
-        let postId  = posts.length;
-        posts.push(newPost);
+       
         
-        res.status(201).send({
-            message : "post créé avec succès",
-            postId : postId
+        let newPost = new model.Post(req.body);
+
+
+        newPost.save((err, results) => {
+            if (err) {
+                console.error(err)
+                //process.exit(1)
+            } else {
+                console.log('Saved: ', results)
+                //process.exit(0)
+            }
         })
     },
     getPosts: function (req, res) {

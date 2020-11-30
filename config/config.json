@@ -1,4 +1,5 @@
 {
     "dev" : true,
-    "port": 3000
+    "port": 3000,
+    "datasource" : "mongodb://localhost:27017/forum_db"
 }

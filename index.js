@@ -1,22 +1,32 @@
-const config = require("./config/config.json")
 
 // importations
-const express = require('express')
-let logger = require("morgan")
+const express = require('express');
+let logger = require("morgan");
+const mongoose = require('mongoose');
+const config = require("./config/config.json");
+const bodyParser = require ('body-parser');
+
 // Instantiations
 const app = express()
 
-const bodyParser = require ('body-parser');
+//Connexion
+mongoose.connect(config.datasource);
+
+
 app.use(logger("dev"));
 app.use (bodyParser.json ())
 app.set('view engine', 'ejs'); 
+
 // Routes
 const postRoute = require("./routes/postRoute")
 const commentRoute = require("./routes/commentRoute");
-
+const themeRoute = require("./routes/themeRoute");
+const userRoute = require("./routes/userRoute");
 
 app.use(postRoute)
 app.use(commentRoute);
+app.use(themeRoute);
+app.use(userRoute);
 
 // démarage du serveur
 app.listen(config.port, function () {
