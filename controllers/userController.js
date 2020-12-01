@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 let model = require("../model/user");
+const bcrypt = require("bcrypt");
 
 module.exports = {
     addUser : function (req, res) {
@@ -11,7 +12,8 @@ module.exports = {
                 console.error(err)
                 //process.exit(1)
             } else {
-                console.log('Saved: ', results)
+                console.log('Saved: ', results);
+                res.status(200).send(results)
                 //process.exit(0)
             }
         })
@@ -52,8 +54,9 @@ module.exports = {
             }
         })
     },
-    modifyUser: function (req, res) {
-        model.findByIdAndUpdate(req.params.userId, req.body,{upsert: true}, (err, results)=>{
+    modifyUser:async function (req, res) {
+         req.body.password  = password = await bcrypt.hash(req.body.password, await bcrypt.genSalt(10));
+         model.findByIdAndUpdate(req.params.userId, req.body,{upsert: true}, (err, results)=>{
             if (err) {
                 console.error(err)
                 //process.exit(1)

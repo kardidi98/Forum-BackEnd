@@ -12,7 +12,8 @@ module.exports = {
                 console.error(err)
                 //process.exit(1)
             } else {
-                console.log('Saved: ', results)
+                console.log('Saved: ', results);
+                res.status(200).send(results)
                 //process.exit(0)
             }
         })
@@ -35,13 +36,14 @@ module.exports = {
                 console.error(err)
                 //process.exit(1)
             } else {
-                console.log('Result By Id: ', results)
+                console.log('Result By Id: ', results);
+                res.status(200).send(results)
                 //process.exit(0)
             }
         })
     },
     deleteTheme: function (req, res) {
-        model.deleteOne(req.params.themeId,(err, results)=>{
+        model.deleteOne({_id: req.params.themeId},(err, results)=>{
             if (err) {
                 console.error(err)
                 //process.exit(1)

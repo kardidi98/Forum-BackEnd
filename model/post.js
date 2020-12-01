@@ -1,5 +1,6 @@
 
 const mongoose = require('mongoose');
+
 const postSchema = mongoose.Schema({
     //_id : mongoose.Schema.Types.ObjectId,
     user: {type : mongoose.Schema.Types.ObjectId, ref: "user"},
@@ -8,4 +9,7 @@ const postSchema = mongoose.Schema({
     message: {type: String, required: true},
 },{timestamps: true}
 );
-module.exports =  mongoose.model("post",postSchema);
+
+const model = mongoose.model("post",postSchema);
+
+module.exports =  model;

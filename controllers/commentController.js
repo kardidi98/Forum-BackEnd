@@ -1,40 +1,93 @@
+const mongoose = require('mongoose');
 
-let comments = [];
-const lodash = require("lodash");
+let model = require("../model/comment");
+
 module.exports = {
     addComment: function(req, res){
-        let newComment = req.body;
-        let commentId = comments.length;
-        comments.push(newComment);
-        res.status(201).send({
-            message : "commentaire créé avec succès",
-            commentId : commentId,
-            postId : req.params.postId
+        let newComment = new model(req.body);
+
+        newComment.save((err, results) => {
+            if (err) {
+                console.error(err)
+                //process.exit(1)
+            } else {
+                console.log('Saved: ', results);
+                res.status(200).send(newComment)
+                //process.exit(0)
+            }
         })
     },
-    getCommentByPost : function(req, res){
-        let fetchedComments = lodash.filter(comments,(item)=>{
-            //console.log(item)
-            return item.postId === parseInt(req.params.postId)
-        });
-        res.render('home', { comments: fetchedComments });
-        res.status(200).send(fetchedComments)
+    getCommentsByPostId : function(req, res){
+        model.findOne({post: req.params.postId},(err, results) =>{
+            if (err) {
+                console.error(err)
+                //process.exit(1)
+            } else {
+                console.log('Result: ', results);
+                res.status(200).send(results)
+                //process.exit(0)
+            }
+        })
+        
+    },
+    getCommentsByUserId : function(req, res){
+        model.findOne({user: req.params.userId},(err, results) =>{
+            if (err) {
+                console.error(err)
+                //process.exit(1)
+            } else {
+                console.log('Result: ', results);
+                res.status(200).send(results)
+                //process.exit(0)
+            }
+        })
         
     },
     getComments : function(req, res){
-        res.render('home', { comments: comments });
-        res.status(200).send(comments)
+        model.find((err, results) =>{
+            if (err) {
+                console.error(err)
+                //process.exit(1)
+            } else {
+                console.log('Result: ', results);
+                res.status(200).send(results)
+                //process.exit(0)
+            }
+        })
+    },
+    getCommentById : function(req, res){
+        model.findById(req.params.commentId,(err, results) =>{
+            if (err) {
+                console.error(err)
+                //process.exit(1)
+            } else {
+                console.log('Result: ', results);
+                res.status(200).send(results)
+                //process.exit(0)
+            }
+        })
     },
     modifyComment : function (req, res) {
-        comments[req.params.commentId] = req.body
-        res.status(201).send({
-            message : "commentaire modifié"
+        model.findByIdAndUpdate(req.params.commentId, req.body,{upsert: true}, (err, results)=>{
+            if (err) {
+                console.error(err)
+                //process.exit(1)
+            } else {
+                console.log('Updated: ', req.body);
+                res.status(200).send(req.body)
+                //process.exit(0)
+            }
         })
     },
     deleteComment : function(req, res){
-        comments.splice(req.params.commentId, 1);
-        res.status(200).send({
-            message : "commentaire supprimé"
+        model.deleteOne({_id: req.params.commentId}, (err, results) =>  {
+            if(err){
+                console.error(err);
+            }
+            else{
+                console.log('Deleted: ', results);
+                res.status(200).send(results)
+            }
         })
     }
 }

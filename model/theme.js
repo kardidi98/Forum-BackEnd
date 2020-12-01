@@ -7,5 +7,6 @@ const themeSchema = mongoose.Schema({
     description: {type: String, required: true},
 }
 );
-const renderModel = mongoose.model("theme",themeSchema);
-module.exports =  renderModel;
+const model = mongoose.model("theme",themeSchema);
+
+module.exports =  model;
