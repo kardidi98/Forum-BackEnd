@@ -42,6 +42,18 @@ module.exports = {
             }
         })
     },
+    getThemeByForumId : function (req,res){
+        model.findOne({forum:req.params.forumId},(err, results) =>{
+            if (err) {
+                console.error(err)
+                //process.exit(1)
+            } else {
+                console.log('Result: ', results);
+                res.status(200).send(results)
+                //process.exit(0)
+            }
+        })
+    },
     deleteTheme: function (req, res) {
         model.deleteOne({_id: req.params.themeId},(err, results)=>{
             if (err) {

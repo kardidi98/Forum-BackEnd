@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 
 const themeSchema = mongoose.Schema({
     //_id : mongoose.Schema.Types.ObjectId,
-    titre: {type: String, required: true},
+    moderateur:{type: mongoose.Schema.Types.ObjectId, ref:"user"},
+    forum:{type: mongoose.Schema.Types.ObjectId, ref:"forum"},
+    titre: {type: String,unique: true, required: true},
     description: {type: String, required: true},
 }
 );

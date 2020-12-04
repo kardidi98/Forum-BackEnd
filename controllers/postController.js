@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+
 
 let model = require("../model/post");
 
@@ -6,7 +6,7 @@ module.exports = {
     addPost : function (req, res) {
        
         let newPost = new model(req.body);
-
+        newPost.user = req.params.userId;
         newPost.save((err, results) => {
             if (err) {
                 console.error(err)
@@ -67,6 +67,7 @@ module.exports = {
             }
         })
     },
+    
 
     deletePost: function (req, res) {
         model.deleteOne({_id: req.params.postId},(err, results)=>{

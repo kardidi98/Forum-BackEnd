@@ -5,7 +5,8 @@ let model = require("../model/comment");
 module.exports = {
     addComment: function(req, res){
         let newComment = new model(req.body);
-
+        newComment.post = req.params.postId;
+        newComment.user = req.params.userId;
         newComment.save((err, results) => {
             if (err) {
                 console.error(err)

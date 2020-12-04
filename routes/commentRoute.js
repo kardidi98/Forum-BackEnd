@@ -6,7 +6,7 @@ router.get("/comments/posts/:postId", commentController.getCommentsByPostId);
 router.get("/comments/users/:userId", commentController.getCommentsByUserId);
 router.get("/comments/:commentId", commentController.getCommentById);
 router.get("/comments", commentController.getComments);
-router.post("/comments", commentController.addComment);
+router.post("/comments/:postId/:userId", commentController.addComment);
 router.delete("/comments/:commentId", commentController.deleteComment);
 router.put("/comments/:commentId", commentController.modifyComment);
 

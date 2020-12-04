@@ -22,11 +22,13 @@ const postRoute = require("./routes/postRoute")
 const commentRoute = require("./routes/commentRoute");
 const themeRoute = require("./routes/themeRoute");
 const userRoute = require("./routes/userRoute");
+const forumRoute = require("./routes/forumRoute");
 
 app.use(postRoute)
 app.use(commentRoute);
 app.use(themeRoute);
 app.use(userRoute);
+app.use(forumRoute);
 
 // démarage du serveur
 app.listen(config.port, function () {
