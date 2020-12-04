@@ -43,7 +43,7 @@ module.exports = {
         })
     },
     deleteUser: function (req, res) {
-        model.deleteOne(req.params.userId,(err, results)=>{
+        model.deleteOne({_id: req.params.userId},(err, results)=>{
             if (err) {
                 console.error(err)
                 //process.exit(1)
