@@ -42,9 +42,9 @@ module.exports = {
             }
         })
     },
-
+    
     getPostByUserId : function (req,res){
-        model.findOne({user: req.params.userId},(err, results) =>{
+        model.find({user: req.params.userId},(err, results) =>{
             if (err) {
                 console.error(err)
                 //process.exit(1)
@@ -56,7 +56,7 @@ module.exports = {
         })
     },
     getPostByThemeId : function (req,res){
-        model.findOne({theme:req.params.themeId},(err, results) =>{
+        model.find({theme:req.params.themeId},(err, results) =>{
             if (err) {
                 console.error(err)
                 //process.exit(1)

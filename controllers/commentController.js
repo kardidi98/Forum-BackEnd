@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+
 
 let model = require("../model/comment");
 
@@ -19,7 +19,7 @@ module.exports = {
         })
     },
     getCommentsByPostId : function(req, res){
-        model.findOne({post: req.params.postId},(err, results) =>{
+        model.find({post: req.params.postId},(err, results) =>{
             if (err) {
                 console.error(err)
                 //process.exit(1)
@@ -32,7 +32,7 @@ module.exports = {
         
     },
     getCommentsByUserId : function(req, res){
-        model.findOne({user: req.params.userId},(err, results) =>{
+        model.find({user: req.params.userId},(err, results) =>{
             if (err) {
                 console.error(err)
                 //process.exit(1)

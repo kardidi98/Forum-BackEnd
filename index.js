@@ -5,6 +5,7 @@ let logger = require("morgan");
 const mongoose = require('mongoose');
 const config = require("./config/config.json");
 const bodyParser = require ('body-parser');
+var cors = require('cors');
 
 // Instantiations
 const app = express()
@@ -16,6 +17,7 @@ mongoose.connect(config.datasource);
 app.use(logger("dev"));
 app.use (bodyParser.json ())
 app.set('view engine', 'ejs'); 
+app.use(cors());
 
 // Routes
 const postRoute = require("./routes/postRoute")

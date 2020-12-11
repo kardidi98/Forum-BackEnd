@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 
 let model = require("../model/forum");
 

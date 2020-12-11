@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+
 
 let model = require("../model/theme");
 
@@ -43,7 +43,7 @@ module.exports = {
         })
     },
     getThemeByForumId : function (req,res){
-        model.findOne({forum:req.params.forumId},(err, results) =>{
+        model.find({forum:req.params.forumId},(err, results) =>{
             if (err) {
                 console.error(err)
                 //process.exit(1)
