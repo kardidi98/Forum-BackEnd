@@ -4,12 +4,13 @@ const bcrypt = require("bcrypt");
 
 module.exports = {
     addUser : function (req, res) {
-       
+
         let newUser = new model(req.body);
         
         newUser.save((err, results) => {
             if (err) {
                 console.error(err)
+                res.send(err)
                 //process.exit(1)
             } else {
                 console.log('Saved: ', results);
@@ -37,6 +38,20 @@ module.exports = {
                 //process.exit(1)
             } else {
                 console.log('Result By Id: ', results)
+                res.status(200).send(results)
+                //process.exit(0)
+            }
+        })
+    },
+    
+    getUserByEmail: function (req, res) {
+        model.findOne({email:req.params.email},(err, results)=>{
+            if (err) {
+                console.error(err)
+                res.send(err)
+                //process.exit(1)
+            } else {
+                console.log('Result By Email: ', results)
                 res.status(200).send(results)
                 //process.exit(0)
             }
