@@ -4,22 +4,35 @@ let model = require("../model/theme");
 
 module.exports = {
     addTheme : function (req, res) {
-       
+        
         let newTheme = new model(req.body);
 
         newTheme.save((err, results) => {
             if (err) {
                 console.error(err)
+                res.send(err)
                 //process.exit(1)
             } else {
                 console.log('Saved: ', results);
-                res.status(200).send(results)
+                res.status(200).send(req.body)
                 //process.exit(0)
             }
         })
     },
     getThemes: function (req, res) {
         model.find((err, results)=>{
+            if (err) {
+                console.error(err)
+                //process.exit(1)
+            } else {
+                console.log('Result: ', results);
+                res.status(200).send(results)
+                //process.exit(0)
+            }
+        })
+    },
+    getThemeByTitre : function (req,res){
+        model.find({titre: req.params.titreTheme},(err, results) =>{
             if (err) {
                 console.error(err)
                 //process.exit(1)
@@ -42,6 +55,7 @@ module.exports = {
             }
         })
     },
+
     getThemeByForumId : function (req,res){
         model.find({forum:req.params.forumId},(err, results) =>{
             if (err) {
@@ -69,7 +83,8 @@ module.exports = {
     modifyTheme: function (req, res) {
         model.findByIdAndUpdate(req.params.themeId, req.body,{upsert: true}, (err, results)=>{
             if (err) {
-                console.error(err)
+                console.error(err);
+                res.send(err)
                 //process.exit(1)
             } else {
                 console.log('Updated: ', req.body);
