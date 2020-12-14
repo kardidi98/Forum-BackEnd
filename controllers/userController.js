@@ -69,8 +69,9 @@ module.exports = {
             }
         })
     },
+    
     modifyUser:async function (req, res) {
-         req.body.password  = password = await bcrypt.hash(req.body.password, await bcrypt.genSalt(10));
+         req.body.password  = await bcrypt.hash(req.body.password, await bcrypt.genSalt(10));
          model.findByIdAndUpdate(req.params.userId, req.body,{upsert: true}, (err, results)=>{
             if (err) {
                 console.error(err)
