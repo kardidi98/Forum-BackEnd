@@ -1,23 +1,37 @@
 
 
+const { json } = require("body-parser");
 let model = require("../model/theme");
 
 module.exports = {
     addTheme : function (req, res) {
         
         let newTheme = new model(req.body);
-
-        newTheme.save((err, results) => {
+        
+        model.findOne({titre: req.body.titre},  (err, results)=>{
             if (err) {
                 console.error(err)
-                res.send(err)
+                res.status(500).send(err)
                 //process.exit(1)
-            } else {
-                console.log('Saved: ', results);
-                res.status(200).send(results)
-                //process.exit(0)
+            }
+            else if(results){
+                res.status(409).send("Exists");
+            }
+            else {
+                newTheme.save((err, results) => {
+                    if (err) {
+                        console.error(err)
+                        res.send(err)
+                        //process.exit(1)
+                    } else {
+                        console.log('Saved: ', results);
+                        res.status(200).send(results)
+                        //process.exit(0)
+                    }
+                })
             }
         })
+        
     },
     getThemes: function (req, res) {
         model.find((err, results)=>{

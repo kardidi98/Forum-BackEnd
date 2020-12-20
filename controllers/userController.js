@@ -1,23 +1,61 @@
-
 let model = require("../model/user");
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
+const config = require('../config/config.json');
 
 module.exports = {
     addUser : function (req, res) {
 
         let newUser = new model(req.body);
         
-        newUser.save((err, results) => {
+        model.findOne({email: req.body.email},  (err, results)=>{
             if (err) {
                 console.error(err)
-                res.send(err)
+                res.status(500).send(err)
                 //process.exit(1)
-            } else {
-                console.log('Saved: ', results);
-                res.status(200).send(results)
-                //process.exit(0)
+            }
+            else if(results){
+                res.status(409).send("Exists");
+            }
+            else {
+                newUser.save((err, results) => {
+                    if (err) {
+                        console.error(err)
+                        res.send(err)
+                        //process.exit(1)
+                    } else {
+                        console.log('Saved: ', results);
+                        res.status(200).send(results)
+                        //process.exit(0)
+                    }
+                })
             }
         })
+        
+    },
+    login : async function(req, res){
+         model.findOne({email: req.body.email},  (err, results)=>{
+            if (err) {
+                console.error(err)
+                res.status(500).send(err)
+                //process.exit(1)
+            }
+            else if(!results){
+                res.status(404).send("No user found.");
+            }
+            else {
+                var passwordIsValid =  bcrypt.compareSync(req.body.password, results.password);
+                if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
+                
+                var token = jwt.sign({ id: res._id }, config.secret, {
+                expiresIn: 86400 // expires in 24 hours
+                });
+                
+                res.status(200).send({ auth: true, token: token });
+            }
+        })
+        
+        
     },
     getUsers: function (req, res) {
         model.find((err, results)=>{
