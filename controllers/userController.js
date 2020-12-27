@@ -33,6 +33,7 @@ module.exports = {
         })
         
     },
+    
     login : async function(req, res){
          model.findOne({email: req.body.email},  (err, results)=>{
             if (err) {
@@ -45,13 +46,13 @@ module.exports = {
             }
             else {
                 var passwordIsValid =  bcrypt.compareSync(req.body.password, results.password);
-                if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
+                if (!passwordIsValid) return res.status(401).send({id:null, auth: false, token: null });
                 
                 var token = jwt.sign({ id: res._id }, config.secret, {
                 expiresIn: 86400 // expires in 24 hours
                 });
                 
-                res.status(200).send({ auth: true, token: token });
+                res.status(200).send({id: results._id, auth: true,isAdmin: results.isAdmin, token: token });
             }
         })
         
@@ -63,8 +64,9 @@ module.exports = {
                 console.error(err)
                 //process.exit(1)
             } else {
+                
                 console.log('Result: ', results);
-                res.status(200).send(results)
+                res.status(200).send(results.filter((user)=> user.isAdmin !== "true"))
                 //process.exit(0)
             }
         })
