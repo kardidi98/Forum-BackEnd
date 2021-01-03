@@ -5,7 +5,7 @@ const config = require('../config/config.json');
 
 module.exports = {
     addUser : function (req, res) {
-
+        req.body.email = (req.body.email).toLowerCase();
         let newUser = new model(req.body);
         
         model.findOne({email: req.body.email},  (err, results)=>{
@@ -35,6 +35,7 @@ module.exports = {
     },
     
     login : async function(req, res){
+        req.body.email = (req.body.email).toLowerCase();
          model.findOne({email: req.body.email},  (err, results)=>{
             if (err) {
                 console.error(err)
@@ -85,6 +86,7 @@ module.exports = {
     },
     
     getUserByEmail: function (req, res) {
+        
         model.findOne({email:req.params.email},(err, results)=>{
             if (err) {
                 console.error(err)

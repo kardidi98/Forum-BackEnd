@@ -80,6 +80,7 @@ module.exports = {
             }
         })
     },
+    
     deleteComment : function(req, res){
         model.deleteOne({_id: req.params.commentId}, (err, results) =>  {
             if(err){
