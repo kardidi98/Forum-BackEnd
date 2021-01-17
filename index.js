@@ -48,6 +48,6 @@ app.use(userRoute);
 app.use(forumRoute);
 
 // démarage du serveur
-app.listen(config.port, function () {
-        console.log(`server running at http://localhost:`+config.port);
+app.listen(PORT, function () {
+        console.log(`server running at : `+PORT);
     });
