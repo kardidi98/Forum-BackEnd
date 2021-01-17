@@ -72,6 +72,7 @@ module.exports = {
             }
         })
     },
+    
     getUserById: function (req, res) {
         model.findById(req.params.userId,(err, results)=>{
             if (err) {

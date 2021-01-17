@@ -6,12 +6,27 @@ const mongoose = require('mongoose');
 const config = require("./config/config.json");
 const bodyParser = require ('body-parser');
 var cors = require('cors');
+const path = require('path');
+const PORT = process.env.PORT || config.port;
 
 // Instantiations
 const app = express()
 
 //Connexion
-mongoose.connect(config.datasource);
+mongoose.connect(config.datasource, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: true,
+    useCreateIndex: true
+})
+.then(() => {
+    console.log("Connected to the database");
+})
+.catch(() => {
+    console.log("Connection failed!");
+});
+
+
 
 
 app.use(logger("dev"));
